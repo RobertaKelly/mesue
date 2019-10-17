@@ -28,7 +28,7 @@
    <bool>true</bool>
   </property>
   <property name="windowTitle">
-   <string>SISURBANO - Evaluación Multi Criterio</string>
+   <string>MESUE - Modelo de Evaluación de Sustentabilidad Urbana Espacial</string>
   </property>
   <property name="sizeGripEnabled">
    <bool>true</bool>

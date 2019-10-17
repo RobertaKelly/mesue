@@ -495,7 +495,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "SISURBANO - Evaluación Multi Criterio"))
+        Dialog.setWindowTitle(_translate("Dialog", "MESUE - Modelo de Evaluación de Sustentabilidad Urbana Espacial"))
         self.SetBtnHelp.setText(_translate("Dialog", "Help"))
         self.SetBtnAbout.setText(_translate("Dialog", "About"))
         self.BaseLayerLbl.setText(_translate("Dialog", "TextLabel"))

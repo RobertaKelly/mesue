@@ -42,20 +42,20 @@ class geoSustainability:
 
 	def initGui(self):	# aggiunge alla GUI di QGis i pulsanti per richiamare il plugin
 		# creiamo l'azione che lancerà il plugin
-		self.actionSUST = QAction(QIcon(":/plugins/ssam/icon.png"), "EMC SISURBANO", self.iface.mainWindow())
+		self.actionSUST = QAction(QIcon(":/plugins/ssam/icon.png"), "MESUE - Modelo de Sustentabilidad Urbana Espacial", self.iface.mainWindow())
 		self.actionSUST.triggered.connect(self.runSUIT)
 		self.iface.addToolBarIcon(self.actionSUST)
-		self.iface.addPluginToMenu( "&EMC SISURBANO ",self.actionSUST )
+		self.iface.addPluginToMenu( "&MESUE ",self.actionSUST )
 
 	def unload(self):	# rimuove dalla GUI i pulsanti aggiunti dal plugin
-		self.iface.removePluginMenu( "&EMC SISURBANO",self.actionSUST)
+		self.iface.removePluginMenu( "&MESUE",self.actionSUST)
 		self.iface.removeToolBarIcon(self.actionSUST)
 		
 	def runSUIT(self):	# richiamato al click sull'azione
 		from .geoSUIT import geoSUITDialog
 		self.active_layer = self.iface.activeLayer()
 		if ((self.active_layer == None) or (self.active_layer.type() != QgsMapLayer.VectorLayer)):
-			result=QMessageBox.warning(self.iface.mainWindow(), "EMC SISURBANO",
+			result=QMessageBox.warning(self.iface.mainWindow(), "MESUE",
 			("No se ha encontrado un layer activo\n" "Activa el layer con los indicadores\n" \
             "Necesitas más información ?"), QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
 			if result  == QMessageBox.Yes:

@@ -1,9 +1,9 @@
 [general]
-name=SSAM
+name=MESUE
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
-description=EMCSISURBANO
-version=1.0.1
+description=MESUE
+version=1.0.0
 
 
 # end of mandatory metadata
@@ -28,7 +28,7 @@ experimental=False
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
 
-about= EMCSISURBANO is a QGIS plugin for urban sustainability assessment in geographic environment, using environmental, economic and social criteria. The outputs of EMCSISURBANO are both geographic and graphic. More data and documents are available on https://llactalab.ucuenca.edu.ec. This plugin is based in SSAM 
+about= MESUE is a QGIS plugin for urban sustainability assessment in geographic environment, using environmental, economic and social criteria. The outputs of MESUE are both geographic and graphic. More data and documents are available on https://llactalab.ucuenca.edu.ec. This plugin is based in SSAM 
 category=Vector
 
 # Author contact information
