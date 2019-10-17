@@ -70,6 +70,10 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.removeLayerBtnECO.clicked.connect(self.removeEcoLayers)
 		self.addLayerBtnSOC.clicked.connect(self.addSocLayers)
 		self.removeLayerBtnSOC.clicked.connect(self.removeSocLayers)
+
+		self.addLayerBtnSocialSpatial.clicked.connect(self.addSocialSpatialLayers)
+		self.removeLayerBtnSocialSpatial.clicked.connect(self.removeSocialSpatialLayers)
+
 		self.EnvGetWeightBtn.clicked.connect(self.elaborate)
 		self.EcoGetWeightBtn.clicked.connect(self.elaborate)
 		self.SocGetWeightBtn.clicked.connect(self.elaborate)
@@ -170,6 +174,18 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		selectedItems = self.listSocFields.selectedItems()
 		[self.listSocFields.takeItem(self.listSocFields.row(item)) for item in selectedItems]
 		self.listAllFields.addItems([item.text() for item in selectedItems])
+
+	def addSocialSpatialLayers(self):
+		"add criteria fiends in environmental list"
+		selectedItems = self.listAllFields.selectedItems()
+		[self.listAllFields.takeItem(self.listAllFields.row(item)) for item in selectedItems]
+		self.listSocialSpatial.addItems([item.text() for item in selectedItems])
+
+	def removeSocialSpatialLayers(self):
+		"remove criteria fields from environmental list"
+		selectedItems = self.listSocialSpatial.selectedItems()
+		[self.listSocialSpatial.takeItem(self.listSocialSpatial.row(item)) for item in selectedItems]
+		self.listAllFields.addItems([item.text() for item in selectedItems])		
 		
 
 	def popMenu(self):
@@ -811,15 +827,14 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 	def about(self):
 		"""    Visualize an About window."""
-		QMessageBox.about(self, "About geoSustainability",
+		QMessageBox.about(self, "Acerca de SISURBANO",
 		"""
-			<p>SSAM Spatial Sustainability Assessment Model<br />2019-05-10<br />License: GPL v. 3</p>
+			<p>SISURBANO<br />2019-12-31<br />License: GPL v. 3</p>
 			<hr>
-			<p>Universita' degli Studi di Perugia - Dipartimento di scienze agrarie, alimentari e ambientali <a href="http://www.unipg.it">www.unipg.it</a></p>
-			<p>ARPA Umbria - Agenzia Regionale per la Protezione Ambientale <a href="http://www.arpa.umbria.it">www.arpa.umbria.it</a></p>
+			<p>Universidad de Cuenca - Departamento de Espacio y Población - LLactaLAB <a href="https://llactalab.ucuenca.edu.ec/">llactalab.ucuenca.edu.ec</a></p>
 			<hr>
-			<p>Documents, data and tutorial: <a href="http://maplab.alwaysdata.net/SSAM.html">maplab.alwaysdata.net</a></p>
-			<p>Please report any bug to <a href="mailto:g_massa@libero.it">g_massa@libero.it</a></p>
+			<p>Documentación: <a href="https://llactalab.ucuenca.edu.ec">llactalab.ucuenca.edu.ec</a></p>
+			<p>Reporta errores a <a href="mailto:johnatan.astudillo@ucuenca.edu.ec">johnatan.astudillo@ucuenca.edu.ec</a></p>
 		""")
 
 
@@ -827,7 +842,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 	def open_help(self):
 		currentDir = unicode(os.path.abspath( os.path.dirname(__file__)))
 		webbrowser.open(os.path.join(currentDir,"data.html"))
-		webbrowser.open("http://maplab.alwaysdata.net/SSAM.html")
+		webbrowser.open("https://llactalab.ucuenca.edu.ec/")
 
 ###################################################################################################
 
