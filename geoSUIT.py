@@ -119,7 +119,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 		self.baseLbl.setText(sourceIn)
 		pathSource=os.path.dirname(sourceIn)
-		outputFile="geosustainability.shp"
+		outputFile="emcsisurbano.shp"
 		sourceOut=os.path.join(pathSource,outputFile)
 		self.OutlEdt.setText(str(sourceOut))
 		

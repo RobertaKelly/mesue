@@ -2,7 +2,7 @@
 name=SSAM
 qgisMinimumVersion=2.99
 qgisMaximumVersion=3.99
-description=Spatial Sustainability Assessment Model (SSAM)
+description=EMCSISURBANO
 version=1.0.1
 
 
@@ -18,7 +18,7 @@ version=1.0.1
 tags=Sustainability, Geographic MCDA, Vector
 
 
-homepage=http://maplab.alwaysdata.net/SSAM.html
+homepage=https://llactalab.ucuenca.edu.ec/
 tracker=https://github.com/gmassei/SSAM/issues
 repository=https://github.com/gmassei/SSAM
 icon=icon.png
