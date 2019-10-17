@@ -1,3 +1,6 @@
+
+Basado en SSAM proveniente de 
+
 Copyright (c) 2013 Gianluca Massei <g_massa@libero.it>
 http://maplab.alwaysdata.net
 
