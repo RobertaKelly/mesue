@@ -68,7 +68,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
       <enum>QFrame::Plain</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <property name="tabSpacing">
       <number>-1</number>
@@ -83,7 +83,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        </rect>
       </property>
       <attribute name="label">
-       <string>Configuraciones</string>
+       <string>Análisis</string>
       </attribute>
       <widget class="QPushButton" name="SetBtnHelp">
        <property name="geometry">
@@ -101,7 +101,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         </size>
        </property>
        <property name="text">
-        <string>Help</string>
+        <string>Ayuda</string>
        </property>
       </widget>
       <widget class="QPushButton" name="SetBtnAbout">
@@ -120,7 +120,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         </size>
        </property>
        <property name="text">
-        <string>About</string>
+        <string>Acerca de</string>
        </property>
       </widget>
       <widget class="QDialogButtonBox" name="SetBtnBox">
@@ -215,7 +215,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="title">
         <string>A Ambiente Construido</string>
        </property>
-       <widget class="QPushButton" name="addLayerBtnENV">
+       <widget class="QPushButton" name="addLayerBtnBUILT">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -228,20 +228,20 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <string>&gt;&gt;&gt;</string>
         </property>
        </widget>
-       <widget class="QListWidget" name="listEnvFields">
+       <widget class="QListWidget" name="listBuiltFields">
         <property name="geometry">
          <rect>
           <x>90</x>
-          <y>20</y>
+          <y>30</y>
           <width>231</width>
-          <height>71</height>
+          <height>61</height>
          </rect>
         </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::MultiSelection</enum>
         </property>
        </widget>
-       <widget class="QPushButton" name="removeLayerBtnENV">
+       <widget class="QPushButton" name="removeLayerBtnBUILT">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -270,7 +270,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="title">
         <string>B Ambiente Biofísico</string>
        </property>
-       <widget class="QPushButton" name="removeLayerBtnECO">
+       <widget class="QPushButton" name="removeLayerBtnBIO">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -283,20 +283,20 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <string>&lt;&lt;&lt;</string>
         </property>
        </widget>
-       <widget class="QListWidget" name="listEcoFields">
+       <widget class="QListWidget" name="listBioFields">
         <property name="geometry">
          <rect>
           <x>90</x>
-          <y>20</y>
+          <y>30</y>
           <width>231</width>
-          <height>71</height>
+          <height>61</height>
          </rect>
         </property>
         <property name="selectionMode">
          <enum>QAbstractItemView::MultiSelection</enum>
         </property>
        </widget>
-       <widget class="QPushButton" name="addLayerBtnECO">
+       <widget class="QPushButton" name="addLayerBtnBIO">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -325,7 +325,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="title">
         <string>C Movilidad Urbana</string>
        </property>
-       <widget class="QPushButton" name="addLayerBtnSOC">
+       <widget class="QPushButton" name="addLayerBtnMOB">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -338,7 +338,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <string>&gt;&gt;&gt;</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="removeLayerBtnSOC">
+       <widget class="QPushButton" name="removeLayerBtnMOB">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -351,13 +351,13 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <string>&lt;&lt;&lt;</string>
         </property>
        </widget>
-       <widget class="QListWidget" name="listSocFields">
+       <widget class="QListWidget" name="listMobFields">
         <property name="geometry">
          <rect>
           <x>90</x>
-          <y>20</y>
+          <y>30</y>
           <width>231</width>
-          <height>71</height>
+          <height>61</height>
          </rect>
         </property>
         <property name="selectionMode">
@@ -464,13 +464,13 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <string>&lt;&lt;&lt;</string>
         </property>
        </widget>
-       <widget class="QListWidget" name="listSocialSpatial">
+       <widget class="QListWidget" name="listSocioFields">
         <property name="geometry">
          <rect>
           <x>90</x>
-          <y>20</y>
+          <y>30</y>
           <width>231</width>
-          <height>71</height>
+          <height>61</height>
          </rect>
         </property>
         <property name="selectionMode">
@@ -519,11 +519,11 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Layer     </string>
        </property>
       </widget>
-      <widget class="QLabel" name="EnvMapNameLbl">
+      <widget class="QLabel" name="BuiltMapNameLbl">
        <property name="geometry">
         <rect>
          <x>69</x>
-         <y>8</y>
+         <y>0</y>
          <width>431</width>
          <height>16</height>
         </rect>
@@ -539,22 +539,6 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        </property>
        <property name="textFormat">
         <enum>Qt::AutoText</enum>
-       </property>
-      </widget>
-      <widget class="QTextEdit" name="EnvTEdit">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>370</y>
-         <width>531</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>2</verstretch>
-        </sizepolicy>
        </property>
       </widget>
       <widget class="Line" name="line_2">
@@ -595,7 +579,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="title">
         <string>Normalización y pesos</string>
        </property>
-       <widget class="QPushButton" name="EnvGetWeightBtn">
+       <widget class="QPushButton" name="BuiltGetWeightBtn">
         <property name="geometry">
          <rect>
           <x>550</x>
@@ -611,10 +595,10 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </size>
         </property>
         <property name="text">
-         <string>Apply</string>
+         <string>Aplicar</string>
         </property>
        </widget>
-       <widget class="QTableWidget" name="EnvWeighTableWidget">
+       <widget class="QTableWidget" name="BuiltWeighTableWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -673,7 +657,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <number>0</number>
         </property>
        </widget>
-       <widget class="QPushButton" name="EnvSaveCfgBtn">
+       <widget class="QPushButton" name="BuiltSaveCfgBtn">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -683,7 +667,33 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Guardar</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_15">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>380</y>
+         <width>651</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Output &gt;_</string>
+       </property>
+       <widget class="QLabel" name="lblOutputA">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>631</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>mesue:</string>
         </property>
        </widget>
       </widget>
@@ -713,27 +723,11 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Layer     </string>
        </property>
       </widget>
-      <widget class="QTextEdit" name="EcoTEdit">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>370</y>
-         <width>530</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>2</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
-      <widget class="QLabel" name="EcoMapNameLbl">
+      <widget class="QLabel" name="BioMapNameLbl">
        <property name="geometry">
         <rect>
          <x>90</x>
-         <y>9</y>
+         <y>0</y>
          <width>431</width>
          <height>16</height>
         </rect>
@@ -789,7 +783,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="title">
         <string>Normalización y pesos</string>
        </property>
-       <widget class="QTableWidget" name="EcoWeighTableWidget">
+       <widget class="QTableWidget" name="BioWeighTableWidget">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -829,7 +823,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <bool>true</bool>
         </attribute>
        </widget>
-       <widget class="QPushButton" name="EcoSaveCfgBtn">
+       <widget class="QPushButton" name="BioSaveCfgBtn">
         <property name="geometry">
          <rect>
           <x>20</x>
@@ -839,7 +833,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Guardar</string>
         </property>
        </widget>
        <widget class="QProgressBar" name="EcoProgressBar">
@@ -855,7 +849,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <number>0</number>
         </property>
        </widget>
-       <widget class="QPushButton" name="EcoGetWeightBtn">
+       <widget class="QPushButton" name="BioGetWeightBtn">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -868,7 +862,33 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Apply</string>
+         <string>Aplicar</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_16">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>370</y>
+         <width>651</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Output &gt;_</string>
+       </property>
+       <widget class="QLabel" name="lblOutputB">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>631</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>mesue:</string>
         </property>
        </widget>
       </widget>
@@ -898,22 +918,6 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <enum>Qt::Horizontal</enum>
        </property>
       </widget>
-      <widget class="QTextEdit" name="SocTEdit">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>370</y>
-         <width>530</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>2</verstretch>
-        </sizepolicy>
-       </property>
-      </widget>
       <widget class="QLabel" name="EcoLbl_2">
        <property name="geometry">
         <rect>
@@ -927,11 +931,11 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <string>Layer     </string>
        </property>
       </widget>
-      <widget class="QLabel" name="SocMapNameLbl">
+      <widget class="QLabel" name="MobMapNameLbl">
        <property name="geometry">
         <rect>
          <x>88</x>
-         <y>6</y>
+         <y>0</y>
          <width>431</width>
          <height>16</height>
         </rect>
@@ -974,7 +978,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="title">
         <string>Normalización y pesos</string>
        </property>
-       <widget class="QPushButton" name="SocGetWeightBtn">
+       <widget class="QPushButton" name="MobilityGetWeightBtn">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -987,10 +991,10 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Apply</string>
+         <string>Aplicar</string>
         </property>
        </widget>
-       <widget class="QTableWidget" name="SocWeighTableWidget">
+       <widget class="QTableWidget" name="MobilityWeighTableWidget">
         <property name="geometry">
          <rect>
           <x>19</x>
@@ -1046,7 +1050,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <number>0</number>
         </property>
        </widget>
-       <widget class="QPushButton" name="SocSaveCfgBtn">
+       <widget class="QPushButton" name="MobSaveCfgBtn">
         <property name="geometry">
          <rect>
           <x>10</x>
@@ -1056,15 +1060,227 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Save</string>
+         <string>Guardar</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_17">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>380</y>
+         <width>651</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Output &gt;_</string>
+       </property>
+       <widget class="QLabel" name="lblOutputC">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>631</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>mesue: </string>
         </property>
        </widget>
       </widget>
      </widget>
      <widget class="QWidget" name="page_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>670</width>
+        <height>466</height>
+       </rect>
+      </property>
       <attribute name="label">
        <string>D Dinámicas Socio-espaciales</string>
       </attribute>
+      <widget class="QLabel" name="EnvLbl_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>0</y>
+         <width>51</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Layer     </string>
+       </property>
+      </widget>
+      <widget class="Line" name="line_3">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>657</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_13">
+       <property name="geometry">
+        <rect>
+         <x>11</x>
+         <y>30</y>
+         <width>661</width>
+         <height>331</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Normalización y pesos</string>
+       </property>
+       <widget class="QPushButton" name="SocioGetWeightBtn">
+        <property name="geometry">
+         <rect>
+          <x>550</x>
+          <y>290</y>
+          <width>104</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>104</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Aplicar</string>
+        </property>
+       </widget>
+       <widget class="QTableWidget" name="SocioWeighTableWidget">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>31</y>
+          <width>630</width>
+          <height>231</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="acceptDrops">
+         <bool>false</bool>
+        </property>
+        <property name="dragEnabled">
+         <bool>true</bool>
+        </property>
+        <property name="dragDropMode">
+         <enum>QAbstractItemView::DragDrop</enum>
+        </property>
+        <property name="gridStyle">
+         <enum>Qt::DotLine</enum>
+        </property>
+        <property name="rowCount">
+         <number>0</number>
+        </property>
+        <attribute name="horizontalHeaderCascadingSectionResizes">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderCascadingSectionResizes">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderHighlightSections">
+         <bool>true</bool>
+        </attribute>
+        <attribute name="verticalHeaderShowSortIndicator" stdset="0">
+         <bool>false</bool>
+        </attribute>
+        <attribute name="verticalHeaderStretchLastSection">
+         <bool>true</bool>
+        </attribute>
+       </widget>
+       <widget class="QProgressBar" name="SocioProgressBar">
+        <property name="geometry">
+         <rect>
+          <x>170</x>
+          <y>290</y>
+          <width>371</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="SocioSaveCfgBtn">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>290</y>
+          <width>104</width>
+          <height>24</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Guardar</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QGroupBox" name="groupBox_18">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>370</y>
+         <width>651</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="title">
+        <string>Output &gt;_</string>
+       </property>
+       <widget class="QLabel" name="lblOutputD">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>30</y>
+          <width>631</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>mesue:</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QLabel" name="SocioMapNameLbl">
+       <property name="geometry">
+        <rect>
+         <x>70</x>
+         <y>0</y>
+         <width>431</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>MS Shell Dlg 2</family>
+         <pointsize>10</pointsize>
+         <weight>9</weight>
+         <italic>true</italic>
+         <bold>false</bold>
+        </font>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::AutoText</enum>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="AnalysisQTBox">
       <property name="geometry">
@@ -1076,7 +1292,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        </rect>
       </property>
       <attribute name="label">
-       <string>Analysis</string>
+       <string>Análisis</string>
       </attribute>
       <widget class="QDialogButtonBox" name="AnlsBtnBox">
        <property name="geometry">
@@ -1101,7 +1317,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         </rect>
        </property>
        <property name="title">
-        <string>Sustainability  maps</string>
+        <string>Mapas de sustentabilidad</string>
        </property>
        <widget class="QSpinBox" name="spinBoxClasNum">
         <property name="geometry">
@@ -1126,7 +1342,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Load maps</string>
+         <string>Cargar mapas</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_7">
@@ -1139,62 +1355,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Classes in maps</string>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QGroupBox" name="groupBox_6">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>190</y>
-         <width>651</width>
-         <height>91</height>
-        </rect>
-       </property>
-       <property name="title">
-        <string>Sustainability cartograms</string>
-       </property>
-       <widget class="QComboBox" name="LabelCartogramCBox">
-        <property name="geometry">
-         <rect>
-          <x>171</x>
-          <y>40</y>
-          <width>291</width>
-          <height>22</height>
-         </rect>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>16777215</width>
-          <height>22</height>
-         </size>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="RenderCarogramBtn">
-        <property name="geometry">
-         <rect>
-          <x>520</x>
-          <y>40</y>
-          <width>111</width>
-          <height>24</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Load cartogram</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_5">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>40</y>
-          <width>141</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Select cartogram field</string>
+         <string>Número de clases en mapas</string>
         </property>
        </widget>
       </widget>
@@ -1257,15 +1418,15 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>290</y>
+         <y>190</y>
          <width>651</width>
-         <height>141</height>
+         <height>191</height>
         </rect>
        </property>
        <property name="title">
-        <string>Overall sustainability</string>
+        <string>Sustentabilidad general</string>
        </property>
-       <widget class="QSlider" name="EnvSlider">
+       <widget class="QSlider" name="BuiltSlider">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -1299,7 +1460,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <number>25</number>
         </property>
        </widget>
-       <widget class="QSlider" name="EcoSlider">
+       <widget class="QSlider" name="BioSlider">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -1324,7 +1485,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <number>25</number>
         </property>
        </widget>
-       <widget class="QSlider" name="SocSlider">
+       <widget class="QSlider" name="MobSlider">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -1359,7 +1520,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Environmental dimension</string>
+         <string>A Ambiente Construido</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_2">
@@ -1372,7 +1533,7 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Economic dimension</string>
+         <string>B Ambiente Biofísico</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_4">
@@ -1380,12 +1541,12 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
          <rect>
           <x>20</x>
           <y>110</y>
-          <width>131</width>
+          <width>161</width>
           <height>21</height>
          </rect>
         </property>
         <property name="text">
-         <string>Social dimension</string>
+         <string>C Movilidad Urbana</string>
         </property>
        </widget>
        <widget class="QPushButton" name="pushBtnEval">
@@ -1395,13 +1556,51 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
         <property name="geometry">
          <rect>
           <x>550</x>
-          <y>30</y>
+          <y>50</y>
           <width>81</width>
           <height>91</height>
          </rect>
         </property>
         <property name="text">
-         <string>Evaluate</string>
+         <string>Evaluar</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>150</y>
+          <width>161</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>C Dinámicas Socio-espaciales</string>
+        </property>
+       </widget>
+       <widget class="QSlider" name="SocialSlider">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="geometry">
+         <rect>
+          <x>200</x>
+          <y>130</y>
+          <width>321</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>25</number>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="tickPosition">
+         <enum>QSlider::TicksAbove</enum>
+        </property>
+        <property name="tickInterval">
+         <number>25</number>
         </property>
        </widget>
       </widget>
@@ -1487,13 +1686,11 @@ font: 75 italic 10pt &quot;MS Shell Dlg 2&quot;;</string>
  </widget>
  <layoutdefault spacing="6" margin="9"/>
  <tabstops>
-  <tabstop>EnvTEdit</tabstop>
   <tabstop>OutlEdt</tabstop>
   <tabstop>RetriveFileTBtn</tabstop>
   <tabstop>SetBtnBox</tabstop>
   <tabstop>SetBtnHelp</tabstop>
   <tabstop>SetBtnAbout</tabstop>
-  <tabstop>EcoTEdit</tabstop>
   <tabstop>AnlsBtnBox</tabstop>
  </tabstops>
  <resources/>

@@ -2,11 +2,11 @@
 
 """
 /***************************************************************************
-Name            : SSAM - Spatial Sustainability Assessment Model
-Description     : geographical MCDA for sustainability assessment
+Name            : MESUE - Modelo de Evaluación de Sustentabilidad Urbana Espacial
+Description     : geographical MCDA for urban sustainability assessment
 Date            : 10/05/2019
-copyright       : ARPA Umbria - Università degli Studi di Perugia (C) 2019
-email           : (developper) Gianluca Massei (g_massa@libero.it)
+copyright       : LlactaLAB - Universidad de Cuenca (C) 2019
+email           : (developper) Johnatan Astudillo (johnatan@ucuenca.edu.ec)
 
  ***************************************************************************/
 
@@ -61,25 +61,27 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		#self.SetBtnBox.clicked.connect(self.reject)
 		self.SetBtnAbout.clicked.connect(self.about)
 		self.SetBtnHelp.clicked.connect(self.open_help)
-		self.EnvSaveCfgBtn.clicked.connect(self.saveCfg)
-		self.EcoSaveCfgBtn.clicked.connect(self.saveCfg)
-		self.SocSaveCfgBtn.clicked.connect(self.saveCfg)
-		self.addLayerBtnENV.clicked.connect(self.addEnvLayers)
-		self.removeLayerBtnENV.clicked.connect(self.removeEnvLayers)
-		self.addLayerBtnECO.clicked.connect(self.addEcoLayers)
-		self.removeLayerBtnECO.clicked.connect(self.removeEcoLayers)
-		self.addLayerBtnSOC.clicked.connect(self.addSocLayers)
-		self.removeLayerBtnSOC.clicked.connect(self.removeSocLayers)
+		self.BuiltSaveCfgBtn.clicked.connect(self.saveCfg)
+		self.BioSaveCfgBtn.clicked.connect(self.saveCfg)
+		self.MobSaveCfgBtn.clicked.connect(self.saveCfg)
+		self.SocioSaveCfgBtn.clicked.connect(self.saveCfg)
 
+		self.addLayerBtnBUILT.clicked.connect(self.addBuiltLayers)
+		self.removeLayerBtnBUILT.clicked.connect(self.removeBuiltLayers)
+		self.addLayerBtnBIO.clicked.connect(self.addBioLayers)
+		self.removeLayerBtnBIO.clicked.connect(self.removeBioLayers)
+		self.addLayerBtnMOB.clicked.connect(self.addMobLayers)
+		self.removeLayerBtnMOB.clicked.connect(self.removeMobLayers)
 		self.addLayerBtnSocialSpatial.clicked.connect(self.addSocialSpatialLayers)
 		self.removeLayerBtnSocialSpatial.clicked.connect(self.removeSocialSpatialLayers)
 
-		self.EnvGetWeightBtn.clicked.connect(self.elaborate)
-		self.EcoGetWeightBtn.clicked.connect(self.elaborate)
-		self.SocGetWeightBtn.clicked.connect(self.elaborate)
+		self.BuiltGetWeightBtn.clicked.connect(self.elaborate)
+		self.BioGetWeightBtn.clicked.connect(self.elaborate)
+		self.MobilityGetWeightBtn.clicked.connect(self.elaborate)
+		self.SocioGetWeightBtn.clicked.connect(self.elaborate)
 
 		
-		self.sliders = [self.EnvSlider,self.EcoSlider,self.SocSlider]
+		self.sliders = [self.BuiltSlider,self.BioSlider,self.MobSlider, self.SocialSlider]
 		i=0
 		slider_amount=10
 		slider_precision = 10 
@@ -94,42 +96,47 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 		self.pushBtnEval.clicked.connect(self.overalValue)
 		self.RenderMapBtn.clicked.connect(self.renderLayer)
-		self.RenderCarogramBtn.clicked.connect(self.renderCartogram)
-		self.GraphBtn.clicked.connect(self.buildOutput)
+		# self.RenderCarogramBtn.clicked.connect(self.renderCartogram)
+		# self.GraphBtn.clicked.connect(self.buildOutput)
 		
 		self.AnlsBtnBox.clicked.connect(self.reject)
 		self.CritExtractBtn.clicked.connect(self.extractRules)
 		self.SaveRulesBtn.clicked.connect(self.saveRules)
 
 ###############################ContextMenu########################################
-		envHeaders = self.EnvWeighTableWidget.horizontalHeader()
-		envHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
-		envHeaders.customContextMenuRequested.connect(self.popMenu)
+		builtHeaders = self.BuiltWeighTableWidget.horizontalHeader()
+		builtHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
+		builtHeaders.customContextMenuRequested.connect(self.popMenu)
 		
-		ecoHeaders = self.EcoWeighTableWidget.horizontalHeader()
-		ecoHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
-		ecoHeaders.customContextMenuRequested.connect(self.popMenu)
+		bioHeaders = self.BioWeighTableWidget.horizontalHeader()
+		bioHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
+		bioHeaders.customContextMenuRequested.connect(self.popMenu)
 		
-		socHeaders = self.SocWeighTableWidget.horizontalHeader()
-		socHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
-		socHeaders.customContextMenuRequested.connect(self.popMenu)
+		mobHeaders = self.MobilityWeighTableWidget.horizontalHeader()
+		mobHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
+		mobHeaders.customContextMenuRequested.connect(self.popMenu)
+
+		socioHeaders = self.SocioWeighTableWidget.horizontalHeader()
+		socioHeaders.setContextMenuPolicy(Qt.CustomContextMenu)
+		socioHeaders.customContextMenuRequested.connect(self.popMenu)		
 ##################################################################################
 		sourceIn=str(self.iface.activeLayer().source())
 		self.BaseLayerLbl.setText(sourceIn)
 		
 		self.baseLbl.setText(sourceIn)
 		pathSource=os.path.dirname(sourceIn)
-		outputFile="emcsisurbano.shp"
+		outputFile="mesue.shp"
 		sourceOut=os.path.join(pathSource,outputFile)
 		self.OutlEdt.setText(str(sourceOut))
 		
 		fields = [field.name() for field in self.active_layer.fields() ]
 		self.LabelListFieldsCBox.addItems(fields) #all fields
-		self.LabelCartogramCBox.addItems(['EnvIdeal','EcoIdeal','SocIdeal', 'SustIdeal'])
+		# self.LabelCartogramCBox.addItems(['a_ideal','b_ideal','c_ideal', 'd_ideal', 'sus_ideal'])
 				
-		self.EnvMapNameLbl.setText(self.active_layer.name())
-		self.EcoMapNameLbl.setText(self.active_layer.name())
-		self.SocMapNameLbl.setText(self.active_layer.name())
+		self.BuiltMapNameLbl.setText(self.active_layer.name())
+		self.BioMapNameLbl.setText(self.active_layer.name())
+		self.MobMapNameLbl.setText(self.active_layer.name())
+		self.SocioMapNameLbl.setText(self.active_layer.name())
 		
 ###############build list widget field#############################################
 		allFields=self.getFieldNames(self.active_layer)
@@ -139,52 +146,52 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.LblLogo.setPixmap(QtGui.QPixmap(os.path.join(currentDir,"icon.png")))
 
 
-	def addEnvLayers(self):
+	def addBuiltLayers(self):
 		"add criteria fiends in environmental list"
 		selectedItems = self.listAllFields.selectedItems()
 		[self.listAllFields.takeItem(self.listAllFields.row(item)) for item in selectedItems]
-		self.listEnvFields.addItems([item.text() for item in selectedItems])
+		self.listBuiltFields.addItems([item.text() for item in selectedItems])
 
-	def removeEnvLayers(self):
+	def removeBuiltLayers(self):
 		"remove criteria fields from environmental list"
-		selectedItems = self.listEnvFields.selectedItems()
-		[self.listEnvFields.takeItem(self.listEnvFields.row(item)) for item in selectedItems]
+		selectedItems = self.listBuiltFields.selectedItems()
+		[self.listBuiltFields.takeItem(self.listBuiltFields.row(item)) for item in selectedItems]
 		self.listAllFields.addItems([item.text() for item in selectedItems])
 
-	def addEcoLayers(self):
+	def addBioLayers(self):
 		"add criteria fiends in environmental list"
 		selectedItems = self.listAllFields.selectedItems()
 		[self.listAllFields.takeItem(self.listAllFields.row(item)) for item in selectedItems]
-		self.listEcoFields.addItems([item.text() for item in selectedItems])
+		self.listBioFields.addItems([item.text() for item in selectedItems])
 
-	def removeEcoLayers(self):
+	def removeBioLayers(self):
 		"remove criteria fields from environmental list"
-		selectedItems = self.listEcoFields.selectedItems()
-		[self.listEcoFields.takeItem(self.listEcoFields.row(item)) for item in selectedItems]
+		selectedItems = self.listBioFields.selectedItems()
+		[self.listBioFields.takeItem(self.listBioFields.row(item)) for item in selectedItems]
 		self.listAllFields.addItems([item.text() for item in selectedItems])
 		
-	def addSocLayers(self):
+	def addMobLayers(self):
 		"add criteria fiends in environmental list"
 		selectedItems = self.listAllFields.selectedItems()
 		[self.listAllFields.takeItem(self.listAllFields.row(item)) for item in selectedItems]
-		self.listSocFields.addItems([item.text() for item in selectedItems])
+		self.listMobFields.addItems([item.text() for item in selectedItems])
 
-	def removeSocLayers(self):
+	def removeMobLayers(self):
 		"remove criteria fields from environmental list"
-		selectedItems = self.listSocFields.selectedItems()
-		[self.listSocFields.takeItem(self.listSocFields.row(item)) for item in selectedItems]
+		selectedItems = self.listMobFields.selectedItems()
+		[self.listMobFields.takeItem(self.listMobFields.row(item)) for item in selectedItems]
 		self.listAllFields.addItems([item.text() for item in selectedItems])
 
 	def addSocialSpatialLayers(self):
 		"add criteria fiends in environmental list"
 		selectedItems = self.listAllFields.selectedItems()
 		[self.listAllFields.takeItem(self.listAllFields.row(item)) for item in selectedItems]
-		self.listSocialSpatial.addItems([item.text() for item in selectedItems])
+		self.listSocioFields.addItems([item.text() for item in selectedItems])
 
 	def removeSocialSpatialLayers(self):
 		"remove criteria fields from environmental list"
-		selectedItems = self.listSocialSpatial.selectedItems()
-		[self.listSocialSpatial.takeItem(self.listSocialSpatial.row(item)) for item in selectedItems]
+		selectedItems = self.listSocioFields.selectedItems()
+		[self.listSocioFields.takeItem(self.listSocioFields.row(item)) for item in selectedItems]
 		self.listAllFields.addItems([item.text() for item in selectedItems])		
 		
 
@@ -196,16 +203,16 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		action = menu.exec_(self.mapToGlobal(QPoint(100,100)))
 		if action == removeAction:
 			if self.toolBox.currentIndex()==1:
-				self.removePopup(self.EnvWeighTableWidget)
+				self.removePopup(self.BuiltWeighTableWidget)
 			elif self.toolBox.currentIndex()==2:
-				self.removePopup(self.EcoWeighTableWidget)
+				self.removePopup(self.BioWeighTableWidget)
 			elif self.toolBox.currentIndex()==3:
-				self.removePopup(self.SocWeighTableWidget)
+				self.removePopup(self.MobilityWeighTableWidget)
 			
 		
 			
 	def removePopup(self,table):
-		#selected = sorted(self.EnvWeighTableWidget.selectedColumns(),reverse=True)
+		#selected = sorted(self.BuiltWeighTableWidget.selectedColumns(),reverse=True)
 		selected = sorted(table.selectionModel().selectedColumns(),reverse=True)
 		if len(selected) > 0:
 			for s in selected:
@@ -242,6 +249,10 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 
 	def settingStart(self):
 		""" Prepare file for processing """
+		self.lblOutputA.setText(str("mesue:"))
+		self.lblOutputB.setText(str("mesue:"))
+		self.lblOutputC.setText(str("mesue:"))
+		self.lblOutputD.setText(str("mesue:"))
 		outputFilename=self.OutlEdt.text()
 		for i in range(1,(self.toolBox.count()-1)):
 			self.toolBox.setItemEnabled (i,True)
@@ -266,30 +277,39 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.active_layer=QgsVectorLayer(self.OutlEdt.text(), self.active_layer.name(), "ogr") ##TODO check
 		self.toolBox.setEnabled(True)
 		######build tables###############
-		self.EnvGetWeightBtn.setEnabled(True)
-		envFields =  [str(self.listEnvFields.item(i).text()) for i in range(self.listEnvFields.count())]
-		self.buildTables(self.EnvWeighTableWidget,envFields)
-		self.updateGUIIdealPointFctn(self.EnvWeighTableWidget,provider)
+		self.BuiltGetWeightBtn.setEnabled(True)
+		builtFields =  [str(self.listBuiltFields.item(i).text()) for i in range(self.listBuiltFields.count())]
+		self.buildTables(self.BuiltWeighTableWidget,builtFields)
+		self.updateGUIIdealPointFctn(self.BuiltWeighTableWidget,provider)
 		
-		self.EcoGetWeightBtn.setEnabled(True)
-		ecoFields =[str(self.listEcoFields.item(i).text()) for i in range(self.listEcoFields.count())]
-		self.buildTables(self.EcoWeighTableWidget,ecoFields)
-		self.updateGUIIdealPointFctn(self.EcoWeighTableWidget,provider)
-		
-		self.SocGetWeightBtn.setEnabled(True)
-		socFields =[str(self.listSocFields.item(i).text()) for i in range(self.listSocFields.count())]
-		self.buildTables(self.SocWeighTableWidget,socFields)
-		self.updateGUIIdealPointFctn(self.SocWeighTableWidget,provider)
-		self.readSettingFile(self.EnvWeighTableWidget,envFields) #load setting data stored in setting.csv
-		self.readSettingFile(self.EcoWeighTableWidget,ecoFields) #load setting data stored in setting.csv
-		self.readSettingFile(self.SocWeighTableWidget,socFields) #load setting data stored in setting.csv
+		self.BioGetWeightBtn.setEnabled(True)
+		bioFields =[str(self.listBioFields.item(i).text()) for i in range(self.listBioFields.count())]
+		self.buildTables(self.BioWeighTableWidget,bioFields)
+		self.updateGUIIdealPointFctn(self.BioWeighTableWidget,provider)
+
+
+		self.MobilityGetWeightBtn.setEnabled(True)
+		mobFields =[str(self.listMobFields.item(i).text()) for i in range(self.listMobFields.count())]
+		self.buildTables(self.MobilityWeighTableWidget,mobFields)
+		self.updateGUIIdealPointFctn(self.MobilityWeighTableWidget,provider)
+
+
+		self.SocioGetWeightBtn.setEnabled(True)
+		socioFields =[str(self.listSocioFields.item(i).text()) for i in range(self.listSocioFields.count())]
+		self.buildTables(self.SocioWeighTableWidget,socioFields)
+		self.updateGUIIdealPointFctn(self.SocioWeighTableWidget,provider)		
+
+		self.readSettingFile(self.BuiltWeighTableWidget,builtFields) #load setting data stored in setting.csv
+		self.readSettingFile(self.BioWeighTableWidget,bioFields) #load setting data stored in setting.csv
+		self.readSettingFile(self.MobilityWeighTableWidget,mobFields) #load setting data stored in setting.csv
+		self.readSettingFile(self.SocioWeighTableWidget,socioFields) #load setting data stored in setting.csv
 		return 0
 		
 
 	def buildTables(self,weighTableWidget,fields):
 		"""base function for updateTable()"""
 		Envfields=self.getFieldNames(self.active_layer) #field list
-		setLabel=["Label","Weigths","Preference","Ideal point", "Worst point "]
+		setLabel=["Etiquetas","Pesos","Preferencia","Punto ideal", "Punto anti-ideal "]
 		weighTableWidget.setColumnCount(len(fields))
 		weighTableWidget.setHorizontalHeaderLabels(fields)
 		weighTableWidget.setRowCount(5)
@@ -307,7 +327,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 	def readSettingFile(self,WeighTableWidget,fields):
 		pathSource = (os.path.dirname(str(self.base_layer.source())))
-		print("reading setting file")
+		print("Leyendo archivo de configuraciones")
 		try:
 			if (os.path.exists(os.path.join(pathSource,"setting.csv"))==True):
 				setting=[i.strip().split(';') for i in open(os.path.join(pathSource,"setting.csv")).readlines()]
@@ -321,7 +341,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 							WeighTableWidget.setItem(3,i,QTableWidgetItem(str(setting[4][l])))
 							WeighTableWidget.setItem(4,i,QTableWidgetItem(str(setting[5][l])))
 		except:
-				QgsMessageLog.logMessage("Problem in reading setting file","SSAM")
+				QgsMessageLog.logMessage("Problemas leyendo el archivo de configuraciones","SSAM")
 				#self.fillTableFctn(fields,WeighTableWidget)
 		return 0
 				
@@ -349,52 +369,67 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 	def changeValue(self):
 		"""Event for change gain/cost"""
 		if self.toolBox.currentIndex()==1:
-			cell=self.EnvWeighTableWidget.currentItem()
+			cell=self.BuiltWeighTableWidget.currentItem()
 			r=cell.row()
 			c=cell.column()
-			first=self.EnvWeighTableWidget.item(3, c).text()
-			second=self.EnvWeighTableWidget.item(4, c).text()
+			first=self.BuiltWeighTableWidget.item(3, c).text()
+			second=self.BuiltWeighTableWidget.item(4, c).text()
 			if cell.row()==2:
 				val=cell.text()
 				if val=="cost":
-					self.EnvWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
+					self.BuiltWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
 				elif val=="gain":
-					self.EnvWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
+					self.BuiltWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
 				else:
-					self.EnvWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
-				self.EnvWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
-				self.EnvWeighTableWidget.setItem(4,c, QTableWidgetItem(first))
+					self.BuiltWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
+				self.BuiltWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
+				self.BuiltWeighTableWidget.setItem(4,c, QTableWidgetItem(first))
 		elif self.toolBox.currentIndex()==2:
-			cell=self.EcoWeighTableWidget.currentItem()
+			cell=self.BioWeighTableWidget.currentItem()
 			r=cell.row()
 			c=cell.column()
-			first=self.EcoWeighTableWidget.item(3, c).text()
-			second=self.EcoWeighTableWidget.item(4, c).text()
+			first=self.BioWeighTableWidget.item(3, c).text()
+			second=self.BioWeighTableWidget.item(4, c).text()
 			if cell.row()==2:
 				val=cell.text()
 				if val=="cost":
-					self.EcoWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
+					self.BioWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
 				elif val=="gain":
-					self.EcoWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
+					self.BioWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
 				else:
-					self.EcoWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
-				self.EcoWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
-				self.EcoWeighTableWidget.setItem(4,c, QTableWidgetItem(first))
+					self.BioWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
+				self.BioWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
+				self.BioWeighTableWidget.setItem(4,c, QTableWidgetItem(first))
 		elif self.toolBox.currentIndex()==3:
-			cell=self.SocWeighTableWidget.currentItem()
+			cell=self.MobilityWeighTableWidget.currentItem()
 			c=cell.column()
-			first=self.SocWeighTableWidget.item(3, c).text()
-			second=self.SocWeighTableWidget.item(4, c).text()
+			first=self.MobilityWeighTableWidget.item(3, c).text()
+			second=self.MobilityWeighTableWidget.item(4, c).text()
 			if cell.row()==2:
 				val=cell.text()
 				if val=="cost":
-					self.SocWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
+					self.MobilityWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
 				elif val=="gain":
-					self.SocWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
+					self.MobilityWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
 				else:
-					self.SocWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
-				self.SocWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
-				self.SocWeighTableWidget.setItem(4,c, QTableWidgetItem(first))
+					self.MobilityWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
+				self.MobilityWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
+				self.MobilityWeighTableWidget.setItem(4,c, QTableWidgetItem(first))
+		elif self.toolBox.currentIndex()==4:
+			cell=self.SocioWeighTableWidget.currentItem()
+			c=cell.column()
+			first=self.SocioWeighTableWidget.item(3, c).text()
+			second=self.SocioWeighTableWidget.item(4, c).text()
+			if cell.row()==2:
+				val=cell.text()
+				if val=="cost":
+					self.SocioWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("gain"))
+				elif val=="gain":
+					self.SocioWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem("cost"))
+				else:
+					self.SocioWeighTableWidget.setItem(cell.row(),cell.column(),QTableWidgetItem(str(val)))
+				self.SocioWeighTableWidget.setItem(3,c, QTableWidgetItem(second))
+				self.SocioWeighTableWidget.setItem(4,c, QTableWidgetItem(first))				
 		else:
 			pass
 		
@@ -423,38 +458,39 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			#slider.label.setText('{:.2f}'.format(slider.float_value))
 
 		
-	def setEnvSlider(self):
-		envDelta=self.EnvSlider.maximum()-self.EnvSlider.value()
-		ecoDelta=self.EcoSlider.maximum()-self.EcoSlider.value()
-		socDelta=self.SocSlider.maximum()-self.SocSlider.value()
-		if self.ecoCheckBox.isChecked():
-			ecoMove=self.EcoSlider.value()
-		else:
-			ecoMove=float(ecoDelta)/float(ecoDelta+socDelta)*envDelta
-		if self.socCheckBox.isChecked():
-			socMove=self.SocSlider.value()
-		else:
-			socMove=float(socDelta)/float(ecoDelta+socDelta)*envDelta
-		self.EcoSlider.setValue(ecoMove)
-		self.SocSlider.setValue(socMove)
+	# def setBuiltSlider(self):
+	# 	builtDelta=self.BuiltSlider.maximum()-self.BuiltSlider.value()
+	# 	bioDelta=self.BioSlider.maximum()-self.BioSlider.value()
+	# 	mobDelta=self.MobSlider.maximum()-self.MobSlider.value()
+	# 	socialDelta=self.SocialSlider.maximum()-self.SocialSlider.value()
+	# 	if self.ecoCheckBox.isChecked():
+	# 		bioMove=self.BioSlider.value()
+	# 	else:
+	# 		bioMove=float(bioDelta)/float(bioDelta+mobDelta+socialDelta)*builtDelta
+	# 	if self.socCheckBox.isChecked():
+	# 		mobMove=self.MobSlider.value()
+	# 	else:
+	# 		mobMove=float(mobDelta)/float(bioDelta+mobDelta+socialDelta)*builtDelta
+	# 	self.BioSlider.setValue(bioMove)
+	# 	self.MobSlider.setValue(mobMove)
 		
-	def setEcoSlider(self):
-		envDelta=self.EnvSlider.maximum()-self.EnvSlider.value()
-		ecoDelta=self.EcoSlider.maximum()-self.EcoSlider.value()
-		socDelta=self.SocSlider.maximum()-self.SocSlider.value()
-		envMove=float(envDelta)/float(envDelta+socDelta)*ecoDelta
-		socMove=float(socDelta)/float(envDelta+socDelta)*ecoDelta
-		self.EnvSlider.setValue(envMove)
-		self.SocSlider.setValue(socMove)
+	# def setBioSlider(self):
+	# 	builtDelta=self.BuiltSlider.maximum()-self.BuiltSlider.value()
+	# 	bioDelta=self.BioSlider.maximum()-self.BioSlider.value()
+	# 	mobDelta=self.MobSlider.maximum()-self.MobSlider.value()
+	# 	builtMove=float(builtDelta)/float(builtDelta+mobDelta)*bioDelta
+	# 	mobMove=float(mobDelta)/float(builtDelta+mobDelta)*bioDelta
+	# 	self.BuiltSlider.setValue(builtMove)
+	# 	self.MobSlider.setValue(mobMove)
 	
-	def setSocSlider(self):
-		envDelta=self.EnvSlider.maximum()-self.EnvSlider.value()
-		ecoDelta=self.EcoSlider.maximum()-self.EcoSlider.value()
-		socDelta=self.SocSlider.maximum()-self.SocSlider.value()
-		ecoMove=float(ecoDelta)/float(ecoDelta+envDelta)*socDelta
-		envMove=float(envDelta)/float(ecoDelta+envDelta)*socDelta
-		self.EcoSlider.setValue(ecoMove)
-		self.EnvSlider.setValue(envMove)
+	# def setMobSlider(self):
+	# 	builtDelta=self.BuiltSlider.maximum()-self.BuiltSlider.value()
+	# 	bioDelta=self.BioSlider.maximum()-self.BioSlider.value()
+	# 	mobDelta=self.MobSlider.maximum()-self.MobSlider.value()
+	# 	bioMove=float(bioDelta)/float(bioDelta+builtDelta)*mobDelta
+	# 	builtMove=float(builtDelta)/float(bioDelta+builtDelta)*mobDelta
+	# 	self.BioSlider.setValue(bioMove)
+	# 	self.BuiltSlider.setValue(builtMove)
 		
 	def elaborate(self):
 		self.standardizationIdealPoint()
@@ -486,28 +522,39 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		return (sum(listValue)**(0.5))
 	
 	def standardizationIdealPoint(self):
-		"""Perform STEP 1 and STEP 2 of TOPSIS algorithm"""
+		"""Perform STEP 1 and STEP 2 of TOPSIS algorithm
+		Se calcula la matriz de decision normalizada ponderada
+		raiz(valor/(sum(cada_valor^2))) * peso
+		"""
+
 		if self.toolBox.currentIndex()==1:
-			criteria=[self.EnvWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EnvWeighTableWidget.columnCount())]
-			weight=[float(self.EnvWeighTableWidget.item(1, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
+			criteria=[self.BuiltWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BuiltWeighTableWidget.columnCount())]
+			weight=[float(self.BuiltWeighTableWidget.item(1, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
 			weight=[ round(w/sum(weight),4) for w in weight ]
 			for c,w in zip(range(len(criteria)),weight):
-				self.EnvWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
-			self.EnvGetWeightBtn.setEnabled(False)
+				self.BuiltWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
+			self.BuiltGetWeightBtn.setEnabled(False)
 		elif self.toolBox.currentIndex()==2:
-			criteria=[self.EcoWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EcoWeighTableWidget.columnCount())]
-			weight=[float(self.EcoWeighTableWidget.item(1, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())]
+			criteria=[self.BioWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BioWeighTableWidget.columnCount())]
+			weight=[float(self.BioWeighTableWidget.item(1, c).text()) for c in range(self.BioWeighTableWidget.columnCount())]
 			weight=[ round(w/sum(weight),4) for w in weight ]
 			for c,w in zip(range(len(criteria)),weight):
-				self.EcoWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
-			self.EcoGetWeightBtn.setEnabled(False)
+				self.BioWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
+			self.BioGetWeightBtn.setEnabled(False)
 		elif self.toolBox.currentIndex()==3:
-			criteria=[self.SocWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.SocWeighTableWidget.columnCount())]
-			weight=[float(self.SocWeighTableWidget.item(1, c).text()) for c in range(self.SocWeighTableWidget.columnCount())]
+			criteria=[self.MobilityWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.MobilityWeighTableWidget.columnCount())]
+			weight=[float(self.MobilityWeighTableWidget.item(1, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())]
 			weight=[ round(w/sum(weight),4) for w in weight ]
 			for c,w in zip(range(len(criteria)),weight):
-				self.SocWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
-			self.SocGetWeightBtn.setEnabled(False)
+				self.MobilityWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
+			self.MobilityGetWeightBtn.setEnabled(False)
+		elif self.toolBox.currentIndex()==4:
+			criteria=[self.SocioWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.SocioWeighTableWidget.columnCount())]
+			weight=[float(self.SocioWeighTableWidget.item(1, c).text()) for c in range(self.SocioWeighTableWidget.columnCount())]
+			weight=[ round(w/sum(weight),4) for w in weight ]
+			for c,w in zip(range(len(criteria)),weight):
+				self.SocioWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
+			self.SocioGetWeightBtn.setEnabled(False)			
 		else:
 			pass
 		provider=self.active_layer.dataProvider()
@@ -528,47 +575,70 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 			
 	def relativeCloseness(self):
-		""" Calculate Environmental and Socio-Economicos distance from ideal point"""
+		""" Calculate distance from ideal point
+
+		Medidas al punto ideal y distacia al punto anti-ideal
+		Proximidad Relativa a la alternativa ideal (la mas alejada de la antiideal)
+
+		"""
 		if self.toolBox.currentIndex()==1:
-			criteria=[self.EnvWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EnvWeighTableWidget.columnCount())]
-			weight=[float(self.EnvWeighTableWidget.item(1, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
-			idealPoint=[float(self.EnvWeighTableWidget.item(3, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
+			criteria=[self.BuiltWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BuiltWeighTableWidget.columnCount())]
+			weight=[float(self.BuiltWeighTableWidget.item(1, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
+			idealPoint=[float(self.BuiltWeighTableWidget.item(3, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
 			sumSquareColumnList=[self.extractFieldSumSquare(field) for field in criteria]
-			idealPoint=[float(self.EnvWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c] \
-				for c in range(self.EnvWeighTableWidget.columnCount())]
-			worstPoint=[float(self.EnvWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
-				for c in range(self.EnvWeighTableWidget.columnCount())]
+			idealPoint=[float(self.BuiltWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c] \
+				for c in range(self.BuiltWeighTableWidget.columnCount())]
+			worstPoint=[float(self.BuiltWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
+				for c in range(self.BuiltWeighTableWidget.columnCount())]
 			provider=self.active_layer.dataProvider()
-			if provider.fieldNameIndex("EnvIdeal")==-1:
-				self.addDecisionField(self.active_layer,"EnvIdeal")
-			fldValue = provider.fieldNameIndex("EnvIdeal") #obtain classify field index from its name
-			self.EnvTEdit.append("done") #   setText
+			if provider.fieldNameIndex("a_ideal")==-1:
+				self.addDecisionField(self.active_layer,"a_ideal")
+			fldValue = provider.fieldNameIndex("a_ideal") #obtain classify field index from its name
+			# self.EnvTEdit.append("done") #   setText
+			self.lblOutputA.setText(str("mesue: Done!!!!"))
+			# self.lblOutputA.append(str("Done!!!!"))
 		elif self.toolBox.currentIndex()==2:
-			criteria=[self.EcoWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EcoWeighTableWidget.columnCount())]
-			weight=[float(self.EcoWeighTableWidget.item(1, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())]
+			criteria=[self.BioWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BioWeighTableWidget.columnCount())]
+			weight=[float(self.BioWeighTableWidget.item(1, c).text()) for c in range(self.BioWeighTableWidget.columnCount())]
 			sumSquareColumnList=[self.extractFieldSumSquare(field) for field in criteria]
-			idealPoint=[float(self.EcoWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c] \
-				for c in range(self.EcoWeighTableWidget.columnCount())]
-			worstPoint=[float(self.EcoWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
-				for c in range(self.EcoWeighTableWidget.columnCount())]
+			idealPoint=[float(self.BioWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c] \
+				for c in range(self.BioWeighTableWidget.columnCount())]
+			worstPoint=[float(self.BioWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
+				for c in range(self.BioWeighTableWidget.columnCount())]
 			provider=self.active_layer.dataProvider()
-			if provider.fieldNameIndex("EcoIdeal")==-1:
-				self.addDecisionField(self.active_layer,"EcoIdeal")
-			fldValue = provider.fieldNameIndex("EcoIdeal") #obtain classify field index from its name
-			self.EcoTEdit.append("done")
+			if provider.fieldNameIndex("b_ideal")==-1:
+				self.addDecisionField(self.active_layer,"b_ideal")
+			fldValue = provider.fieldNameIndex("b_ideal") #obtain classify field index from its name
+			# self.EcoTEdit.append("done")
+			self.lblOutputB.setText(str("mesue: Done!!!!"))
 		elif self.toolBox.currentIndex()==3:
-			criteria=[self.SocWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.SocWeighTableWidget.columnCount())]
-			weight=[float(self.SocWeighTableWidget.item(1, c).text()) for c in range(self.SocWeighTableWidget.columnCount())]
+			criteria=[self.MobilityWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.MobilityWeighTableWidget.columnCount())]
+			weight=[float(self.MobilityWeighTableWidget.item(1, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())]
 			sumSquareColumnList=[self.extractFieldSumSquare(field) for field in criteria]
-			idealPoint=[float(self.SocWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c]\
-				for c in range(self.SocWeighTableWidget.columnCount())]
-			worstPoint=[float(self.SocWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
-				for c in range(self.SocWeighTableWidget.columnCount())]
+			idealPoint=[float(self.MobilityWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c]\
+				for c in range(self.MobilityWeighTableWidget.columnCount())]
+			worstPoint=[float(self.MobilityWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
+				for c in range(self.MobilityWeighTableWidget.columnCount())]
 			provider=self.active_layer.dataProvider()
-			if provider.fieldNameIndex("SocIdeal")==-1:
-				self.addDecisionField(self.active_layer,"SocIdeal")
-			fldValue = provider.fieldNameIndex("SocIdeal") #obtain classify field index from its name
-			self.SocTEdit.append("done")
+			if provider.fieldNameIndex("c_ideal")==-1:
+				self.addDecisionField(self.active_layer,"c_ideal")
+			fldValue = provider.fieldNameIndex("c_ideal") #obtain classify field index from its name
+			# self.SocTEdit.append("mesue: done")
+			self.lblOutputC.setText(str("mesue: Done!!!!"))
+		elif self.toolBox.currentIndex()==4:
+			criteria=[self.SocioWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.SocioWeighTableWidget.columnCount())]
+			weight=[float(self.SocioWeighTableWidget.item(1, c).text()) for c in range(self.SocioWeighTableWidget.columnCount())]
+			sumSquareColumnList=[self.extractFieldSumSquare(field) for field in criteria]
+			idealPoint=[float(self.SocioWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c]\
+				for c in range(self.SocioWeighTableWidget.columnCount())]
+			worstPoint=[float(self.SocioWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
+				for c in range(self.SocioWeighTableWidget.columnCount())]
+			provider=self.active_layer.dataProvider()
+			if provider.fieldNameIndex("d_ideal")==-1:
+				self.addDecisionField(self.active_layer,"d_ideal")
+			fldValue = provider.fieldNameIndex("d_ideal") #obtain classify field index from its name
+			# self.SocTEdit.append("mesue: done")
+			self.lblOutputD.setText(str("mesue: Done!!!!"))			
 		else:
 			pass
 		#self.EnvTEdit.append(str(idealPoint)+"#"+str(worstPoint))
@@ -578,6 +648,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.EnvProgressBar.setRange(1,features)
 		self.EcoProgressBar.setRange(1,features)
 		self.SocProgressBar.setRange(1,features)
+		self.SocioProgressBar.setRange(1,features)
 		progress=0
 		for feat in self.active_layer.getFeatures():
 			IP=WP=0
@@ -595,18 +666,19 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.EnvProgressBar.setValue(1)
 		self.EcoProgressBar.setValue(1)
 		self.SocProgressBar.setValue(1)
+		self.SocioProgressBar.setValue(1)
 		return 0
 
 		
 		
 	def overalValue(self):
 		"""Sum Environmental and Socio-economics value for calculate  Sustainable value"""
-		weight=[self.EnvSlider.value(),self.EcoSlider.value(),self.SocSlider.value()]
+		weight=[self.BuiltSlider.value(),self.BioSlider.value(),self.MobSlider.value()]
 		provider=self.active_layer.dataProvider()
-		if provider.fieldNameIndex("SustIdeal")==-1:
-			self.addDecisionField(self.active_layer,"SustIdeal")
-		fldValue = provider.fieldNameIndex("SustIdeal") #obtain classify field index from its name
-		fids=[provider.fieldNameIndex(c) for c in ['EnvIdeal','EcoIdeal','SocIdeal']]
+		if provider.fieldNameIndex("sus_ideal")==-1:
+			self.addDecisionField(self.active_layer,"sus_ideal")
+		fldValue = provider.fieldNameIndex("sus_ideal") #obtain classify field index from its name
+		fids=[provider.fieldNameIndex(c) for c in ['a_ideal','b_ideal','c_ideal', 'd_ideal']]
 		if -1 not in fids:
 			self.active_layer.startEditing()
 			for feat in self.active_layer.getFeatures():
@@ -621,7 +693,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			
 			self.pushBtnEval.setEnabled(False)
 			self.toolBox.setItemEnabled(5,True) #activate last toolbox
-			self.symbolize('SustIdeal')
+			self.symbolize('sus_ideal')
 			return 0
 		else:
 			return -1
@@ -634,7 +706,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		"""Prepare legends for environmental, socio economics and sustainable values"""
 		numberOfClasses=self.spinBoxClasNum.value()
 		if(numberOfClasses==5):
-			classes=['very low', 'low','medium','high','very high']
+			classes=['muy bajo', 'bajo','medio','alto','muy alto']
 		else:
 			classes=range(1,numberOfClasses+1)
 		fieldName = field
@@ -652,20 +724,31 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			Min = round(minimum + (( maximum - minimum ) / numberOfClasses * i),4)
 			Max = round(minimum + (( maximum - minimum ) / numberOfClasses * ( i + 1 )),4)
 			Label = "%s [%.2f - %.2f]" % (c,Min,Max)
-			if field=='SustIdeal':
-				Colour = QColor((255-85*i/numberOfClasses),\
-								(255-255*i/numberOfClasses),\
-								(127-127*i/numberOfClasses)) #red to green
-			elif field=='EnvIdeal':
+			if field=='sus_ideal':
+				# Colour = QColor((255-85*i/numberOfClasses),\
+				# 				(255-255*i/numberOfClasses),\
+				# 				(127-127*i/numberOfClasses)) #red to green
+				Colour = QColor((255-255*i/numberOfClasses),\
+								(255-170*i/numberOfClasses),\
+								(127-127*i/numberOfClasses)) #yellow to green				
+			elif field=='a_ideal':
 				Colour = QColor((255-255*i/numberOfClasses),\
 								(255-170*i/numberOfClasses),\
 								(127-127*i/numberOfClasses)) #yellow to green
-			elif field=='EcoIdeal':
-				Colour = QColor(255,255-255*i/numberOfClasses,0) #yellow to red
-			elif field=='SocIdeal':
+			elif field=='b_ideal':
+				# Colour = QColor(255,255-255*i/numberOfClasses,0) #yellow to red
+				Colour = QColor((255-255*i/numberOfClasses),\
+								(255-170*i/numberOfClasses),\
+								(127-127*i/numberOfClasses)) #yellow to green					
+			elif field=='c_ideal':
 				Colour = QColor((255-255*i/numberOfClasses),\
 								(255-85*i/numberOfClasses),\
 								(127+128*i/numberOfClasses)) #yellow to cyan 255,255,127
+			elif field=='d_ideal':
+				# Colour = QColor(255,255-255*i/numberOfClasses,0) #yellow to red		
+				Colour = QColor((255-255*i/numberOfClasses),\
+								(255-170*i/numberOfClasses),\
+								(127-127*i/numberOfClasses)) #yellow to green					
 			Symbol = QgsSymbol.defaultSymbol(layer.geometryType())
 			Symbol.setColor(Colour)
 			Symbol.setOpacity(Opacity)
@@ -682,7 +765,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		""" Load thematic layers in canvas """
 		#self.setModal(False)
 		layer = self.active_layer
-		fields=['EnvIdeal','EcoIdeal','SocIdeal']
+		fields=['a_ideal','b_ideal','c_ideal', 'd_ideal']
 		for f in fields:
 			self.symbolize(f)
 		
@@ -750,25 +833,26 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		#self.setModal(False)
 		return 0
 
-	def renderCartogram(self):
-		layer=self.createMemoryLayer(self.active_layer)
-		input_field=self.LabelCartogramCBox.currentText()
-		iterations=5
-		Cartogram=CartogramWorker(layer, input_field, iterations)
-		Cartogram.run()
-		if layer is not None:
-			QgsProject.instance().addMapLayer(layer)
-		else:
-			"None!"
+	# def renderCartogram(self):
+	# 	layer=self.createMemoryLayer(self.active_layer)
+	# 	input_field=self.LabelCartogramCBox.currentText()
+	# 	iterations=5
+	# 	Cartogram=CartogramWorker(layer, input_field, iterations)
+	# 	Cartogram.run()
+	# 	if layer is not None:
+	# 		QgsProject.instance().addMapLayer(layer)
+	# 	else:
+	# 		"None!"
 		#export2JSON(layer)
 
 
 		
 	def buildHTML(self):
-		EnvValue=self.extractAttributeValue('EnvIdeal')
-		EcoValue=self.extractAttributeValue('EcoIdeal')
-		SocValue=self.extractAttributeValue('SocIdeal')
-		SustValue=self.extractAttributeValue('SustIdeal')
+		EnvValue=self.extractAttributeValue('a_ideal')
+		EcoValue=self.extractAttributeValue('b_ideal')
+		SocValue=self.extractAttributeValue('c_ideal')
+		SocValue=self.extractAttributeValue('d_ideal')
+		SustValue=self.extractAttributeValue('sus_ideal')
 		#SuitValue=[x+y+z for (x,y,z) in zip(EnvValue,EcoValue,SocValue)]
 		label=self.LabelListFieldsCBox.currentText()
 		labels=self.extractAttributeValue(label)
@@ -778,14 +862,15 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 	def exportTable(self):
 		try:
-			criteria=[self.EnvWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EnvWeighTableWidget.columnCount())]
+			criteria=[self.BuiltWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BuiltWeighTableWidget.columnCount())]
 			currentDIR = (os.path.dirname(str(self.base_layer.source())))
 			bLayer=self.base_layer
-			field_names = [field.name() for field in bLayer.fields()]+['EnvIdeal','EcoIdeal','SocIdeal','SustIdeal']
-			EnvValue=self.extractAttributeValue('EnvIdeal')
-			EcoValue=self.extractAttributeValue('EcoIdeal')
-			SocValue=self.extractAttributeValue('SocIdeal')
-			SustValue=self.extractAttributeValue('SustIdeal')
+			field_names = [field.name() for field in bLayer.fields()]+['a_ideal','b_ideal','c_ideal','d_ideal','sus_ideal']
+			EnvValue=self.extractAttributeValue('a_ideal')
+			EcoValue=self.extractAttributeValue('b_ideal')
+			SocValue=self.extractAttributeValue('c_ideal')
+			SocValue=self.extractAttributeValue('d_ideal')
+			SustValue=self.extractAttributeValue('sus_ideal')
 			att2csv=[]
 			for feature,env,eco,soc in zip(bLayer.getFeatures(),EnvValue,EcoValue,SocValue):
 				row=feature.attributes()+[env,eco,soc]
@@ -796,16 +881,16 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 				spamwriter.writerows(att2csv)
 			return 0
 		except:
-			QgsMessageLog.logMessage("Problem in writing export table file","SSAM")
+			QgsMessageLog.logMessage("Problem in writing export table file","MESUE")
 		
 ###################################################################################################
 	def saveCfg(self):
 		currentDIR = (os.path.dirname(str(self.base_layer.source())))
 		setting=(os.path.join(currentDIR,"setting.csv"))
 		fileCfg = open(os.path.join(currentDIR,"setting.csv"),"w")
-		envLabel=[(self.EnvWeighTableWidget.item(0, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())]
-		ecoLabel=[(self.EcoWeighTableWidget.item(0, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())]
-		socLabel=[(self.SocWeighTableWidget.item(0, c).text()) for c in range(self.SocWeighTableWidget.columnCount())]
+		envLabel=[(self.BuiltWeighTableWidget.item(0, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
+		ecoLabel=[(self.BioWeighTableWidget.item(0, c).text()) for c in range(self.BioWeighTableWidget.columnCount())]
+		socLabel=[(self.MobilityWeighTableWidget.item(0, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())]
 		label=envLabel+ecoLabel+socLabel
 		criteria,preference,weight,ideal,worst=self.usedCriteria()
 		for l in label:
@@ -827,9 +912,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		
 	def about(self):
 		"""    Visualize an About window."""
-		QMessageBox.about(self, "Acerca de SISURBANO",
+		QMessageBox.about(self, "Acerca de MESUE",
 		"""
-			<p>SISURBANO<br />2019-12-31<br />License: GPL v. 3</p>
+			<p>MESUE<br />2019-12-31<br />License: GPL v. 3</p>
 			<hr>
 			<p>Universidad de Cuenca - Departamento de Espacio y Población - LLactaLAB <a href="https://llactalab.ucuenca.edu.ec/">llactalab.ucuenca.edu.ec</a></p>
 			<hr>
@@ -856,7 +941,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			
 	def addDiscretizedField(self):
 		"""add new field"""
-		field="SustIdeal"
+		field="sus_ideal"
 		numberOfClasses=5
 		provider=self.base_layer.dataProvider()
 		#provider=self.active_layer.dataProvider()
@@ -877,21 +962,21 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		return list(set(decision))
 
 	def usedCriteria(self):
-		criteria=[self.EnvWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EnvWeighTableWidget.columnCount())] + \
-			[self.EcoWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.EcoWeighTableWidget.columnCount())] + \
-			[self.SocWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.SocWeighTableWidget.columnCount())]
-		weight=[str(self.EnvWeighTableWidget.item(1, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())] +\
-			[str(self.EcoWeighTableWidget.item(1, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())] + \
-			[str(self.SocWeighTableWidget.item(1, c).text()) for c in range(self.SocWeighTableWidget.columnCount())]
-		preference=[str(self.EnvWeighTableWidget.item(2, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())] +\
-			[str(self.EcoWeighTableWidget.item(2, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())] + \
-			[str(self.SocWeighTableWidget.item(2, c).text()) for c in range(self.SocWeighTableWidget.columnCount())] 
-		ideal=[str(self.EnvWeighTableWidget.item(3, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())] +\
-			[str(self.EcoWeighTableWidget.item(3, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())] + \
-			[str(self.SocWeighTableWidget.item(3, c).text()) for c in range(self.SocWeighTableWidget.columnCount())] 
-		worst=[str(self.EnvWeighTableWidget.item(4, c).text()) for c in range(self.EnvWeighTableWidget.columnCount())] +\
-			[str(self.EcoWeighTableWidget.item(4, c).text()) for c in range(self.EcoWeighTableWidget.columnCount())] + \
-			[str(self.SocWeighTableWidget.item(4, c).text()) for c in range(self.SocWeighTableWidget.columnCount())] 
+		criteria=[self.BuiltWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BuiltWeighTableWidget.columnCount())] + \
+			[self.BioWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BioWeighTableWidget.columnCount())] + \
+			[self.MobilityWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.MobilityWeighTableWidget.columnCount())]
+		weight=[str(self.BuiltWeighTableWidget.item(1, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())] +\
+			[str(self.BioWeighTableWidget.item(1, c).text()) for c in range(self.BioWeighTableWidget.columnCount())] + \
+			[str(self.MobilityWeighTableWidget.item(1, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())]
+		preference=[str(self.BuiltWeighTableWidget.item(2, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())] +\
+			[str(self.BioWeighTableWidget.item(2, c).text()) for c in range(self.BioWeighTableWidget.columnCount())] + \
+			[str(self.MobilityWeighTableWidget.item(2, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())] 
+		ideal=[str(self.BuiltWeighTableWidget.item(3, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())] +\
+			[str(self.BioWeighTableWidget.item(3, c).text()) for c in range(self.BioWeighTableWidget.columnCount())] + \
+			[str(self.MobilityWeighTableWidget.item(3, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())] 
+		worst=[str(self.BuiltWeighTableWidget.item(4, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())] +\
+			[str(self.BioWeighTableWidget.item(4, c).text()) for c in range(self.BioWeighTableWidget.columnCount())] + \
+			[str(self.MobilityWeighTableWidget.item(4, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())] 
 		return criteria, preference,weight,ideal,worst
 		
 	def writeISFfile(self,decision):

@@ -1,4 +1,8 @@
 
+MESUE - Modelo de Evaluación de Sustentabilidad Urbana Espacial
+
+Copyright (c) 2019 Johnatan Astudillo <johnatan.astudillo@ucuenca.edu.ec>
+
 Basado en SSAM proveniente de 
 
 Copyright (c) 2013 Gianluca Massei <g_massa@libero.it>
@@ -11,6 +15,6 @@ http://www.gnu.org/copyleft/gpl.html
 # for rebuild GUI:
 
 rm *.pyc
-pyuic4 -o ui_geoSUIT.py geoSUIT.ui
-pyrcc4 -o resources.py resources.qrc
+pyuic5 -o ui_geoSUIT.py geoSUIT.ui
+pyrcc5 -o resources.py resources.qrc
 
