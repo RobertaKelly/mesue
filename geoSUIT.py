@@ -81,7 +81,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.SocioGetWeightBtn.clicked.connect(self.elaborate)
 
 		
-		self.sliders = [self.BuiltSlider,self.BioSlider,self.MobSlider, self.SocialSlider]
+		self.sliders = [self.BuiltSlider,self.BioSlider,self.MobSlider, self.SocioSlider]
 		i=0
 		slider_amount=10
 		slider_precision = 10 
@@ -253,6 +253,12 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.lblOutputB.setText(str("mesue:"))
 		self.lblOutputC.setText(str("mesue:"))
 		self.lblOutputD.setText(str("mesue:"))
+
+		self.EnvProgressBar.setValue(0)
+		self.EcoProgressBar.setValue(0)
+		self.SocProgressBar.setValue(0)
+		self.SocioProgressBar.setValue(0)		
+
 		outputFilename=self.OutlEdt.text()
 		for i in range(1,(self.toolBox.count()-1)):
 			self.toolBox.setItemEnabled (i,True)
@@ -462,7 +468,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 	# 	builtDelta=self.BuiltSlider.maximum()-self.BuiltSlider.value()
 	# 	bioDelta=self.BioSlider.maximum()-self.BioSlider.value()
 	# 	mobDelta=self.MobSlider.maximum()-self.MobSlider.value()
-	# 	socialDelta=self.SocialSlider.maximum()-self.SocialSlider.value()
+	# 	socialDelta=self.SocioSlider.maximum()-self.SocioSlider.value()
 	# 	if self.ecoCheckBox.isChecked():
 	# 		bioMove=self.BioSlider.value()
 	# 	else:
@@ -495,7 +501,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 	def elaborate(self):
 		self.standardizationIdealPoint()
 		self.relativeCloseness()
-		#self.OveralValue()
+		# self.overalValue()
 		self.saveCfg()
 		#self.setModal(True)
 		return 0
@@ -659,21 +665,26 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 				WP =WP+(float(attributes[f]-wrp)**2)
 			relativeCloseness=(WP**(0.5))/((WP**(0.5))+(IP**(0.5)))
 			self.active_layer.changeAttributeValue(feat.id(), fldValue, round(float(relativeCloseness),4))
-			self.EnvProgressBar.setValue(progress)
-			self.EcoProgressBar.setValue(progress)
-			self.SocProgressBar.setValue(progress)
+			if self.toolBox.currentIndex()==1:
+				self.EnvProgressBar.setValue(progress)
+			elif self.toolBox.currentIndex()==2:
+				self.EcoProgressBar.setValue(progress)
+			elif self.toolBox.currentIndex()==3:
+				self.SocProgressBar.setValue(progress)
+			elif self.toolBox.currentIndex()==4:
+				self.SocioProgressBar.setValue(progress)
 		self.active_layer.commitChanges()
-		self.EnvProgressBar.setValue(1)
-		self.EcoProgressBar.setValue(1)
-		self.SocProgressBar.setValue(1)
-		self.SocioProgressBar.setValue(1)
+		# self.EnvProgressBar.setValue(1)
+		# self.EcoProgressBar.setValue(1)
+		# self.SocProgressBar.setValue(1)
+		# self.SocioProgressBar.setValue(1)
 		return 0
 
 		
 		
 	def overalValue(self):
 		"""Sum Environmental and Socio-economics value for calculate  Sustainable value"""
-		weight=[self.BuiltSlider.value(),self.BioSlider.value(),self.MobSlider.value()]
+		weight=[self.BuiltSlider.value(),self.BioSlider.value(),self.MobSlider.value(), self.SocioSlider.value()]
 		provider=self.active_layer.dataProvider()
 		if provider.fieldNameIndex("sus_ideal")==-1:
 			self.addDecisionField(self.active_layer,"sus_ideal")
@@ -691,8 +702,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			
 			#self.LabelCartogramCBox.addItems(self.getFieldNames(self.active_layer)) #numeric fields
 			
-			self.pushBtnEval.setEnabled(False)
+			# self.pushBtnEval.setEnabled(False)
 			self.toolBox.setItemEnabled(5,True) #activate last toolbox
+			# self.toolBox.setItemEnabled(6,True) #activate last toolbox
 			self.symbolize('sus_ideal')
 			return 0
 		else:
