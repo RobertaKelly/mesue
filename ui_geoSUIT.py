@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'geoSUIT.ui'
 #
-# Created by: PyQt5 UI code generator 5.9.2
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
@@ -440,21 +442,8 @@ class Ui_Dialog(object):
         self.label_7 = QtWidgets.QLabel(self.groupBox_5)
         self.label_7.setGeometry(QtCore.QRect(20, 30, 141, 20))
         self.label_7.setObjectName("label_7")
-        self.groupBox_7 = QtWidgets.QGroupBox(self.AnalysisQTBox)
-        self.groupBox_7.setGeometry(QtCore.QRect(20, 100, 651, 81))
-        self.groupBox_7.setObjectName("groupBox_7")
-        self.GraphBtn = QtWidgets.QPushButton(self.groupBox_7)
-        self.GraphBtn.setGeometry(QtCore.QRect(520, 30, 111, 24))
-        self.GraphBtn.setObjectName("GraphBtn")
-        self.label_3 = QtWidgets.QLabel(self.groupBox_7)
-        self.label_3.setGeometry(QtCore.QRect(20, 35, 111, 20))
-        self.label_3.setObjectName("label_3")
-        self.LabelListFieldsCBox = QtWidgets.QComboBox(self.groupBox_7)
-        self.LabelListFieldsCBox.setGeometry(QtCore.QRect(170, 33, 291, 22))
-        self.LabelListFieldsCBox.setMaximumSize(QtCore.QSize(16777215, 22))
-        self.LabelListFieldsCBox.setObjectName("LabelListFieldsCBox")
         self.groupBox_8 = QtWidgets.QGroupBox(self.AnalysisQTBox)
-        self.groupBox_8.setGeometry(QtCore.QRect(20, 190, 651, 191))
+        self.groupBox_8.setGeometry(QtCore.QRect(20, 110, 651, 191))
         self.groupBox_8.setObjectName("groupBox_8")
         self.BuiltSlider = QtWidgets.QSlider(self.groupBox_8)
         self.BuiltSlider.setEnabled(True)
@@ -595,9 +584,6 @@ class Ui_Dialog(object):
         self.groupBox_5.setTitle(_translate("Dialog", "Mapas de sustentabilidad"))
         self.RenderMapBtn.setText(_translate("Dialog", "Cargar mapas"))
         self.label_7.setText(_translate("Dialog", "Número de clases en mapas"))
-        self.groupBox_7.setTitle(_translate("Dialog", "Sustainability charts"))
-        self.GraphBtn.setText(_translate("Dialog", "Build charts"))
-        self.label_3.setText(_translate("Dialog", "Select name field"))
         self.groupBox_8.setTitle(_translate("Dialog", "Sustentabilidad general"))
         self.label.setText(_translate("Dialog", "A Ambiente Construido"))
         self.label_2.setText(_translate("Dialog", "B Ambiente Biofísico"))
@@ -609,5 +595,4 @@ class Ui_Dialog(object):
         self.SaveRulesBtn.setText(_translate("Dialog", "Save rules"))
         self.groupBox_3.setTitle(_translate("Dialog", "Active layer"))
         self.baseLbl.setText(_translate("Dialog", "TextLabel"))
-        self.toolBox.setItemText(self.toolBox.indexOf(self.RulesQTBox), _translate("Dialog", "Rules"))
-
+        self.toolBox.setItemText(self.toolBox.indexOf(self.RulesQTBox), _translate("Dialog", "Reglas"))

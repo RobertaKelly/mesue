@@ -44,6 +44,8 @@ from .cartogram import *
 
 from .ui_geoSUIT import Ui_Dialog
 
+from .Zettings import *
+
 class geoSUITDialog(QDialog, Ui_Dialog):
 	def __init__(self, iface):
 		'''costruttore'''
@@ -130,7 +132,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.OutlEdt.setText(str(sourceOut))
 		
 		fields = [field.name() for field in self.active_layer.fields() ]
-		self.LabelListFieldsCBox.addItems(fields) #all fields
+		# self.LabelListFieldsCBox.addItems(fields) #all fields
 		# self.LabelCartogramCBox.addItems(['a_ideal','b_ideal','c_ideal', 'd_ideal', 'sus_ideal'])
 				
 		self.BuiltMapNameLbl.setText(self.active_layer.name())
@@ -144,6 +146,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 #################################################################################
 		currentDir=unicode(os.path.abspath( os.path.dirname(__file__)))
 		self.LblLogo.setPixmap(QtGui.QPixmap(os.path.join(currentDir,"icon.png")))
+
+#################################################################################
+		self.automaticMoveFliedsToCategories()		
 
 
 	def addBuiltLayers(self):
@@ -253,12 +258,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.lblOutputB.setText(str("mesue:"))
 		self.lblOutputC.setText(str("mesue:"))
 		self.lblOutputD.setText(str("mesue:"))
-
-		self.EnvProgressBar.setValue(0)
-		self.EcoProgressBar.setValue(0)
-		self.SocProgressBar.setValue(0)
-		self.SocioProgressBar.setValue(0)		
-
+	
 		outputFilename=self.OutlEdt.text()
 		for i in range(1,(self.toolBox.count()-1)):
 			self.toolBox.setItemEnabled (i,True)
@@ -285,6 +285,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		######build tables###############
 		self.BuiltGetWeightBtn.setEnabled(True)
 		builtFields =  [str(self.listBuiltFields.item(i).text()) for i in range(self.listBuiltFields.count())]
+		# print(builtFields)
 		self.buildTables(self.BuiltWeighTableWidget,builtFields)
 		self.updateGUIIdealPointFctn(self.BuiltWeighTableWidget,provider)
 		
@@ -309,8 +310,16 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		self.readSettingFile(self.BioWeighTableWidget,bioFields) #load setting data stored in setting.csv
 		self.readSettingFile(self.MobilityWeighTableWidget,mobFields) #load setting data stored in setting.csv
 		self.readSettingFile(self.SocioWeighTableWidget,socioFields) #load setting data stored in setting.csv
+
+		self.EnvProgressBar.setRange(0,100)
+		self.EnvProgressBar.setValue(0)
+		self.EcoProgressBar.setRange(0,100)
+		self.EcoProgressBar.setValue(0)
+		self.SocProgressBar.setRange(0,100)
+		self.SocProgressBar.setValue(0)
+		self.SocioProgressBar.setRange(0,100)
+		self.SocioProgressBar.setValue(0)			
 		return 0
-		
 
 	def buildTables(self,weighTableWidget,fields):
 		"""base function for updateTable()"""
@@ -321,7 +330,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		weighTableWidget.setRowCount(5)
 		weighTableWidget.setVerticalHeaderLabels(setLabel)
 		for r in range(len(fields)):
-			weighTableWidget.setItem(0,r,QTableWidgetItem("-"))
+			defaultLabel = self.loadDefaultLabel(fields[r])
+			# print("el nombre es: " + defaultLabel)
+			weighTableWidget.setItem(0,r,QTableWidgetItem(defaultLabel))
 			weighTableWidget.setItem(1,r,QTableWidgetItem("1.0"))
 			weighTableWidget.setItem(2,r,QTableWidgetItem("gain"))
 		
@@ -330,7 +341,15 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			weighTableWidget.cellClicked[(int,int)].connect(self.changeValue)
 		except:
 			pass
-		
+
+	def loadDefaultLabel(self, field):
+		isIndicatorSisurbano, group, name = self.isIndicatorSisurbano(field)
+		if(name == "-"):
+			description = "-"
+		else:
+			description = NAMES_INDEX[name.upper()][2]
+		return description		
+
 	def readSettingFile(self,WeighTableWidget,fields):
 		pathSource = (os.path.dirname(str(self.base_layer.source())))
 		print("Leyendo archivo de configuraciones")
@@ -536,7 +555,10 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		if self.toolBox.currentIndex()==1:
 			criteria=[self.BuiltWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BuiltWeighTableWidget.columnCount())]
 			weight=[float(self.BuiltWeighTableWidget.item(1, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
+			# print(weight)
 			weight=[ round(w/sum(weight),4) for w in weight ]
+			print("----peso recalculado------")
+			# print(weight)
 			for c,w in zip(range(len(criteria)),weight):
 				self.BuiltWeighTableWidget.setItem(1,c,QTableWidgetItem(str(w))) 
 			self.BuiltGetWeightBtn.setEnabled(False)
@@ -565,7 +587,9 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			pass
 		provider=self.active_layer.dataProvider()
 		feat = QgsFeature()
+		#obtiene los id de los atributos
 		fids=[provider.fieldNameIndex(c) for c in criteria]  #obtain array fields index from its name
+		# print(fids)
 		#self.EnvTEdit.append(str(dict(zip(fids,[(field) for field in criteria]))))
 		sumSquareColumn=dict(zip(fids,[self.extractFieldSumSquare(field) for field in criteria]))
 		#provider.select(fids)
@@ -573,6 +597,8 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		for f,w in zip(fids,weight): #N.B. verifica corretto allineamento con i pesi
 			for feat in self.active_layer.getFeatures():
 				attributes=feat.attributes()[f]
+				# print(attributes)
+				# FIXME: DA PROBLEMAS CUANDO TODOS LOS VALORES SON CERO
 				value=(float(attributes)/float(sumSquareColumn[f]))*w   # TOPSIS algorithm: STEP 1 and STEP 2
 				#print sumSquareColumn[f]
 				self.active_layer.changeAttributeValue(feat.id(),f,round(value,4))
@@ -590,10 +616,17 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		if self.toolBox.currentIndex()==1:
 			criteria=[self.BuiltWeighTableWidget.horizontalHeaderItem(f).text() for f in range(self.BuiltWeighTableWidget.columnCount())]
 			weight=[float(self.BuiltWeighTableWidget.item(1, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
-			idealPoint=[float(self.BuiltWeighTableWidget.item(3, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
+			# print(weight)
+			# idealPoint=[float(self.BuiltWeighTableWidget.item(3, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
 			sumSquareColumnList=[self.extractFieldSumSquare(field) for field in criteria]
+			#el valor ideal se normaliza y se pondera de la misma forma que los valores de las alternativas
+			#usando los valores de la matriz ponderada
 			idealPoint=[float(self.BuiltWeighTableWidget.item(3, c).text())/sumSquareColumnList[c]*weight[c] \
 				for c in range(self.BuiltWeighTableWidget.columnCount())]
+			print("-----------ideal point------------")
+			# print(idealPoint)
+			#el valor anti-ideal se normaliza y se pondera de la misma forma que los valores de las alternativas
+			#usando los valores de la matriz ponderada
 			worstPoint=[float(self.BuiltWeighTableWidget.item(4, c).text())/sumSquareColumnList[c]*weight[c] \
 				for c in range(self.BuiltWeighTableWidget.columnCount())]
 			provider=self.active_layer.dataProvider()
@@ -649,6 +682,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			pass
 		#self.EnvTEdit.append(str(idealPoint)+"#"+str(worstPoint))
 		features=provider.featureCount() #Number of features in the layer.
+		print("total de featrues: " + str(features))
 		fids=[provider.fieldNameIndex(c) for c in criteria]  #obtain array fields index from its name
 		self.active_layer.startEditing()
 		self.EnvProgressBar.setRange(1,features)
@@ -659,12 +693,15 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		for feat in self.active_layer.getFeatures():
 			IP=WP=0
 			for f,idp,wrp in zip(fids,idealPoint,worstPoint):
-				progress=progress+1
 				attributes = feat.attributes()
+				# para cada celda o alternativa se suma las diferencias a los puntos ideal y anti-ideal
+				# diferencias de distancias globales
 				IP =IP+(float(attributes[f]-idp)**2)   # TOPSIS algorithm: STEP 4
 				WP =WP+(float(attributes[f]-wrp)**2)
+			# distancia relativa de todos los criterios(indicadores)	
 			relativeCloseness=(WP**(0.5))/((WP**(0.5))+(IP**(0.5)))
 			self.active_layer.changeAttributeValue(feat.id(), fldValue, round(float(relativeCloseness),4))
+			progress=progress+1
 			if self.toolBox.currentIndex()==1:
 				self.EnvProgressBar.setValue(progress)
 			elif self.toolBox.currentIndex()==2:
@@ -840,7 +877,7 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 			os.remove(os.path.join(currentDir,"points.png"))
 		if os.path.isfile(os.path.join(currentDir,"histogram.png"))==True:
 			os.remove(os.path.join(currentDir,"histogram.png"))
-		self.buildHTML()
+		# self.buildHTML()
 		webbrowser.open(os.path.join(currentDir,"barGraph.html"))
 		#self.setModal(False)
 		return 0
@@ -859,18 +896,18 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 
 
 		
-	def buildHTML(self):
-		EnvValue=self.extractAttributeValue('a_ideal')
-		EcoValue=self.extractAttributeValue('b_ideal')
-		SocValue=self.extractAttributeValue('c_ideal')
-		SocValue=self.extractAttributeValue('d_ideal')
-		SustValue=self.extractAttributeValue('sus_ideal')
-		#SuitValue=[x+y+z for (x,y,z) in zip(EnvValue,EcoValue,SocValue)]
-		label=self.LabelListFieldsCBox.currentText()
-		labels=self.extractAttributeValue(label)
-		labels=[str(l) for l in labels]
-		htmlGraph.BuilHTMLGraph(SustValue,EnvValue,EcoValue,SocValue,labels)
-		return 0
+	# def buildHTML(self):
+	# 	EnvValue=self.extractAttributeValue('a_ideal')
+	# 	EcoValue=self.extractAttributeValue('b_ideal')
+	# 	SocValue=self.extractAttributeValue('c_ideal')
+	# 	SocValue=self.extractAttributeValue('d_ideal')
+	# 	SustValue=self.extractAttributeValue('sus_ideal')
+	# 	#SuitValue=[x+y+z for (x,y,z) in zip(EnvValue,EcoValue,SocValue)]
+	# 	label=self.LabelListFieldsCBox.currentText()
+	# 	labels=self.extractAttributeValue(label)
+	# 	labels=[str(l) for l in labels]
+	# 	htmlGraph.BuilHTMLGraph(SustValue,EnvValue,EcoValue,SocValue,labels)
+	# 	return 0
 		
 	def exportTable(self):
 		try:
@@ -900,10 +937,12 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		currentDIR = (os.path.dirname(str(self.base_layer.source())))
 		setting=(os.path.join(currentDIR,"setting.csv"))
 		fileCfg = open(os.path.join(currentDIR,"setting.csv"),"w")
-		envLabel=[(self.BuiltWeighTableWidget.item(0, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
-		ecoLabel=[(self.BioWeighTableWidget.item(0, c).text()) for c in range(self.BioWeighTableWidget.columnCount())]
-		socLabel=[(self.MobilityWeighTableWidget.item(0, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())]
-		label=envLabel+ecoLabel+socLabel
+		builtLabel=[(self.BuiltWeighTableWidget.item(0, c).text()) for c in range(self.BuiltWeighTableWidget.columnCount())]
+		bioLabel=[(self.BioWeighTableWidget.item(0, c).text()) for c in range(self.BioWeighTableWidget.columnCount())]
+		mobLabel=[(self.MobilityWeighTableWidget.item(0, c).text()) for c in range(self.MobilityWeighTableWidget.columnCount())]
+		socialLabel=[(self.SocioWeighTableWidget.item(0, c).text()) for c in range(self.SocioWeighTableWidget.columnCount())]
+		label=builtLabel+bioLabel+mobLabel+socialLabel
+		# print(label)
 		criteria,preference,weight,ideal,worst=self.usedCriteria()
 		for l in label:
 			fileCfg.write(str(l)+";")
@@ -1095,4 +1134,37 @@ class geoSUITDialog(QDialog, Ui_Dialog):
 		filedata = f.read() 
 		self.text.setText(filedata) 
 		f.close()
+
+	def isIndicatorSisurbano(self, item):
+		group = item[:2]
+		isCorrectLength = len(item[2:]) == 2
+		isNumber = (item[2:]).isdigit()		
+		if not isNumber or not isCorrectLength:
+			item = "-"
+		return isNumber and isCorrectLength, group, item 
+
+	def automaticMoveFliedsToCategories(self):
+		"add criteria fiends in environmental list"
+		# print("moving flieds")
+		items = []
+		for index in range(self.listAllFields.count()):
+			item = self.listAllFields.item(index)
+			nameIndicator = item.text()
+			isIndicatorSisurbano, group, nameIndicator = self.isIndicatorSisurbano(nameIndicator)
+			if(isIndicatorSisurbano):
+				if(group == "ia"):
+					self.listBuiltFields.addItem(nameIndicator)	
+				elif(group == "ib"):
+					self.listBioFields.addItem(nameIndicator)	
+				elif(group == "ic"):
+					self.listMobFields.addItem(nameIndicator)	
+				elif(group == "id"):
+					self.listSocioFields.addItem(nameIndicator)											
+				items.append(item)
+		[self.listAllFields.takeItem(self.listAllFields.row(item)) for item in items]					
+		# print(items)
+
+
+
+		# 
 
