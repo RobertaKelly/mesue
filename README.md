@@ -9,7 +9,7 @@ Herramienta de Sistemas de Información Geográfica para QGIS para la Evaluació
 - QGIS 3.10.2 o superior
 
 ## Instalación
-Descargue o clone el repositorio, luego comprima la carpeta y agregue a sus complementos de QGIS. El complemento se agregará a la "Barra de herramientas" de QGIS con el siguiente logo: ![Logo mesue](/icongit2.png)
+Descargue o clone el repositorio, luego comprima la carpeta y agregue a sus complementos de QGIS. El complemento se agregará a la "Barra de herramientas" de QGIS con el siguiente logo: ![Logo mesue](/icon2.png)
 
 Al abrir se nos presentará la siguiente pantalla donde se prodrá seleccionar los indicadores que se quieran evaluar.
 
