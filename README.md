@@ -1,7 +1,9 @@
 ![Logo](/mesue.png)
 
-# MESUE - Plugin para la Evaluación de Sustentabilidad Urbana Espacial
-Herramienta de Sistemas de Información Geográfica para QGIS para la Evaluación de Sustentabilidad Urbana Espacial. 
+# MESUE - Modelo de Evaluación de Sustentabilidad Urbana Espacial.
+Herramienta de Sistemas de Información Geográfica QGIS para la Evaluación de Sustentabilidad Urbana Espacial. 
+
+MESUE es un complemento QGIS para la evaluación de la sostenibilidad urbana en el entorno geográfico, utilizando criterios de ambiente construido, ambiente biofísico, movilidad urbana y dinámicas socio-espaciales. Los resultados de MESUE son geográficos. La herramienta es open-source y puede ser utilizada de forma libre por investigadores, técnicos, estudiantes, planificadores y ciudadanía en general. Más datos y documentos están disponibles en https://llactalab.ucuenca.edu.ec.
 
 > Basado en la herramienta [SSAM](https://github.com/gmassei/SSAM) (Spatial Sustainability Assessment Model).
 
@@ -21,3 +23,9 @@ rm *.pyc
 pyuic5 -o ui_geoSUIT.py geoSUIT.ui
 pyrcc5 -o resources.py resources.qrc
 ```
+
+## Contactos
+
+LlactaLAB – Ciudades Sustentables es un Grupo de Investigación de la Universidad de Cuenca, parte del Departamento Interdisciplinario de Espacio y Población.
+
+llactalab@ucuenca.edu.ec

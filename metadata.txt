@@ -1,10 +1,9 @@
 [general]
 name=MESUE
-qgisMinimumVersion=2.99
+qgisMinimumVersion=3.10
 qgisMaximumVersion=3.99
 description=MESUE
 version=1.0.0
-
 
 # end of mandatory metadata
 
@@ -15,12 +14,12 @@ version=1.0.0
 			 corrected bug in rules buildin when active layer and base layer where in different directori
 
 # tags are comma separated with spaces allowed
-tags=Sustainability, Geographic MCDA, Vector
+tags=Sustainability, Vector, Urban
 
 
-homepage=https://llactalab.ucuenca.edu.ec/
-tracker=https://llactalab.ucuenca.edu.ec/
-repository=https://llactalab.ucuenca.edu.ec/
+homepage=https://llactalab.ucuenca.edu.ec/sisurbano/
+tracker=https://github.com/fastuller88/mesue/issues
+repository=https://github.com/mesue/sisurbano
 icon=icon.png
 # experimental flag
 experimental=False
@@ -28,9 +27,9 @@ experimental=False
 # deprecated flag (applies to the whole plugin, not just a single version
 deprecated=False
 
-about= MESUE is a QGIS plugin for urban sustainability assessment in geographic environment, using environmental, economic and social criteria. The outputs of MESUE are both geographic and graphic. More data and documents are available on https://llactalab.ucuenca.edu.ec. This plugin is based in SSAM 
+about=MESUE es un complemento QGIS para la evaluación de la sostenibilidad urbana en el entorno geográfico, utilizando criterios de ambiente construido, ambiente biofísico, movilidad urbana y dinámicas socio-espaciales. Los resultados de MESUE son geográficos. Más datos y documentos están disponibles en https://llactalab.ucuenca.edu.ec. Este complemento está basado en la herramienta SSAM.
 category=Vector
 
 # Author contact information
-author=LlactaLAB - Universidad de Cuenca (Developer: Johnatan Astudillo)
-email=johnatan.astudillo@ucuenca.edu.ec
+author= @fastuller88 | llactalab@ucuenca.edu.ec | Universidad de Cuenca
+email=llactalab@ucuenca.edu.ec
