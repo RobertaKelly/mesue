@@ -3,7 +3,7 @@
 # MESUE - Modelo de Evaluación de Sustentabilidad Urbana Espacial.
 Herramienta de Sistemas de Información Geográfica QGIS para la Evaluación de Sustentabilidad Urbana Espacial. 
 
-MESUE es un complemento QGIS para la evaluación de la sostenibilidad urbana en el entorno geográfico, utilizando criterios de ambiente construido, ambiente biofísico, movilidad urbana y dinámicas socio-espaciales. Los resultados de MESUE son geográficos. La herramienta es open-source y puede ser utilizada de forma libre por investigadores, técnicos, estudiantes, planificadores y ciudadanía en general. Más datos y documentos están disponibles en https://llactalab.ucuenca.edu.ec.
+MESUE es un complemento QGIS para la evaluación de la sostenibilidad urbana en el entorno geográfico, utilizando criterios de ambiente construido, ambiente biofísico, movilidad urbana y dinámicas socio-espaciales. Los resultados de MESUE son geográficos. La herramienta es open-source y puede ser utilizada de forma libre por investigadores, técnicos, estudiantes, planificadores y ciudadanía en general. Más datos y documentos están disponibles en https://llactalab.ucuenca.edu.ec.  463  git cmp "editing..."
 
 > Basado en la herramienta [SSAM](https://github.com/gmassei/SSAM) (Spatial Sustainability Assessment Model).
 

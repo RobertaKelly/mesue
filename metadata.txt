@@ -1,9 +1,8 @@
 [general]
 name=MESUE
 qgisMinimumVersion=3.10
-qgisMaximumVersion=3.99
 description=MESUE
-version=1.0.0
+version=0.1
 
 # end of mandatory metadata
 
@@ -11,7 +10,7 @@ version=1.0.0
 
 # Uncomment the following line and add your changelog entries:
 # changelog= wrong bug tracker in metadata fixed (https://llactalab.ucuenca.edu.ec/)
-			 corrected bug in rules buildin when active layer and base layer where in different directori
+# corrected bug in rules buildin when active layer and base layer where in different directori
 
 # tags are comma separated with spaces allowed
 tags=Sustainability, Vector, Urban
@@ -19,7 +18,7 @@ tags=Sustainability, Vector, Urban
 
 homepage=https://llactalab.ucuenca.edu.ec/sisurbano/
 tracker=https://github.com/fastuller88/mesue/issues
-repository=https://github.com/mesue/sisurbano
+repository=https://github.com/llactalab/mesue
 icon=icon.png
 # experimental flag
 experimental=False
