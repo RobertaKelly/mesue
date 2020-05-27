@@ -1,5 +1,5 @@
 [general]
-name=MESUE
+name=mesue
 qgisMinimumVersion=3.10
 description=MESUE
 version=0.1
