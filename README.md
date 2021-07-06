@@ -23,8 +23,8 @@ MESUE es un complemento QGIS para la evaluación de la sostenibilidad urbana en 
 
 
 ## Badges o escudos
-<img src="https://cdn.icon-icons.com/icons2/2415/PNG/512/python_original_wordmark_logo_icon_146382.png" alt="Python"  width="100" height="100"/>
 
+<img src="https://img.shields.io/badge/Python%20-30k-blue"/> <img src="https://img.shields.io/badge/Javascript%20-8.7k-yellow"/> <img src="https://img.shields.io/badge/CSS%20-963-blue"/> <img src="https://img.shields.io/badge/HTML-891-red"/>
 
 ## Requisitos 
 - QGIS 3.10.2 o superior
@@ -52,5 +52,6 @@ LlactaLAB – Ciudades Sustentables es un Grupo de Investigación de la Universi
 llactalab@ucuenca.edu.ec
 
 ## Licencia 
+<img src="https://img.shields.io/badge/GNU%20License%20-v3.0-blue"/>
 
 [GNU General Public License v3.0](https://github.com/llactalab/mesue/blob/master/LICENSE)
